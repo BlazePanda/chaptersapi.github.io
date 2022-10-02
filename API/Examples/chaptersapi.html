@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapters API Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <meta name="chapdef" content="https://pastebin.com/raw/tarxtkwz" />
+</head>
+<body style="font-family: 'Poppins', sans-serif;">
+  <script>
+    console.log("Sending Chapter Data To Extension");
+
+    if (typeof browser === "undefined") {
+      var browser = chrome;
+    }
+
+    var chapters = {
+        "chapters": [
+            {
+                "title": "Introduction",
+                "uniqueidentifier": "intro",
+                "reference": {
+                    "type": "object",
+                    "objectid": "chapter_intro"
+                },
+                "backgroundstyle": ""
+            },
+            {
+                "title": "Who are we",
+                "uniqueidentifier": "whoarewe",
+                "reference": {
+                    "type": "object",
+                    "objectid": "chapter_whoarewe"
+                },
+                "backgroundstyle": "-webkit-linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%)"
+            },
+            {
+                "title": "Test Scroll To Custom Position",
+                "uniqueidentifier": "test",
+                "reference": {
+                    "type": "position",
+                    "x": 0,
+                    "y": 400
+                },
+                "backgroundstyle": "-webkit-linear-gradient(90deg, hsla(33, 100%, 53%, 1) 0%, hsla(58, 100%, 68%, 1) 100%)"
+            },
+            {
+                "title": "Test Callback",
+                "uniqueidentifier": "testcallback",
+                "reference": {
+                    "type": "donothing"
+                },
+                "backgroundstyle": "red" // Sets the page last chapter to the unique identifier (testcallback), and then the main page can know that we have clicked on test callback
+            }
+        ]
+    }
+
+    // Send Chapters Every 10ms
+
+    let sendChaptersLoop = setInterval(() => {
+      var data = { "actiontype": "updatechapters", "recipient": "gmjchapters", chapters };
+      window.postMessage(data, "*");
+    }, 10);
+
+    // Setup Callback Event
+
+    lastChapter = document.body.dataset.lastselectedchapter;
+
+    setInterval(() => {
+      if (document.body.dataset.lastselectedchapter != lastChapter) {
+        lastChapter = document.body.dataset.lastselectedchapter;
+
+        if (document.body.dataset.lastselectedchapter.startsWith("testcallback")) {
+          alert("Test Callback");
+        }
+      }
+    }, 100);
+
+  </script>
+  <div style="width: 80%; position: relative; left: 10%;" >
+    <h1 style="text-align: center; color: dodgerblue;">
+      Chapters API Test
+    </h1>
+    <h3 style="text-decoration: underline;">
+      This page was made for demonstration purposes on how the chapters api can be used, therefore don't judge me for not putting much effort into it lol.
+    </h3>
+    <h2 id="chapter_intro">
+      Introduction
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2 id="chapter_whoarewe">
+      Who are we?
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2>
+      Partners
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2>
+      Sponsors
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2>
+      Pricing
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2>
+      Downloads
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+    <h2>
+      Contact Us
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet justo commodo, sagittis massa a, porta lectus. Praesent aliquam sodales lorem sed dictum. Ut enim nunc, gravida sed purus vel, placerat efficitur arcu. Aliquam massa metus, cursus in ornare sed, viverra quis lectus. Nunc suscipit mauris ut pellentesque ullamcorper. Nunc ut odio non erat vehicula porttitor at et arcu. Nunc ultricies tellus sed odio scelerisque fermentum. Praesent suscipit augue nisi, sed bibendum quam volutpat non. Cras a ultricies ligula.
+    </p>
+  </div>
+  </body>
+</html>
